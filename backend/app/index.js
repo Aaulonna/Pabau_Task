@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise'); // Using promise-based API
+const cors = require('cors');
 
 const app = express();
 const port = 5000;
@@ -16,14 +17,33 @@ const pool = mysql.createPool({
 });
 
 app.use(bodyParser.json());
+app.use(cors()); // Enable CORS for all routes
 
 // API endpoint to fetch bookings
 app.get('/api/bookings', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM bookings');
+    const [rows] = await pool.query('SELECT * FROM bookings order by id desc');
     res.status(200).json(rows);
   } catch (error) {
     console.error('Error fetching bookings:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/bookings/:id', async (req, res) => {
+  const bookingId = req.params.id;
+  console.log("booking id" , bookingId)
+  try {
+    const [rows] = await pool.query('SELECT * FROM bookings WHERE id = ?', [bookingId]);
+    if (rows.length === 0) {
+      // If no booking found with the given ID, return 404 Not Found
+      res.status(404).send('Booking not found');
+    } else {
+      // If booking found, return it
+      res.status(200).json(rows[0]);
+    }
+  } catch (error) {
+    console.error('Error fetching booking:', error);
     res.status(500).send('Internal Server Error');
   }
 });
