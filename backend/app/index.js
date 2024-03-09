@@ -17,7 +17,7 @@ const pool = mysql.createPool({
 });
 
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors()); 
 
 // API endpoint to fetch bookings
 app.get('/api/bookings', async (req, res) => {
@@ -36,10 +36,8 @@ app.get('/api/bookings/:id', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM bookings WHERE id = ?', [bookingId]);
     if (rows.length === 0) {
-      // If no booking found with the given ID, return 404 Not Found
       res.status(404).send('Booking not found');
     } else {
-      // If booking found, return it
       res.status(200).json(rows[0]);
     }
   } catch (error) {
