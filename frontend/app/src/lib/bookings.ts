@@ -1,7 +1,7 @@
 import { CreateBookingDataInterface } from "@/types/types"
 
 export async function getBookings() {
-  const res = await fetch('http://host.docker.internal:5000/api/bookings', { cache: 'no-store', mode: 'no-cors' })
+  const res = await fetch('http://host.docker.internal:5000/api/bookings', { cache: 'no-store', mode: 'no-cors',next: { tags: ['bookings'] } })
  
   if (!res.ok) {
     throw new Error('Failed to fetch data')

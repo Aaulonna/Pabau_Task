@@ -4,9 +4,9 @@ import BookingForm from "./BookingForm";
 import { formatTime } from "@/helpers/formatTime";
 import { CreateBookingDataInterface } from "@/types/types";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { alert } from "@/helpers/alert";
 import Alert from "./Alert";
+import handleRevalidate from "@/helpers/revalidateTag";
 
 const CreateBooking = () => {
   const router = useRouter();
@@ -19,6 +19,7 @@ const CreateBooking = () => {
     };
     try {
       await createBooking(formatedBookingData);
+      handleRevalidate();
       router.push("/booking");
     } catch (error) {
       console.error("Error creating booking:", error);
@@ -28,9 +29,6 @@ const CreateBooking = () => {
 
   return (
     <>
-      {/* <Link href="/" className="btn btn-primary ">
-        Back
-      </Link> */}
       <BookingForm handleSubmit={handleSubmit} />
       <Alert />
     </>

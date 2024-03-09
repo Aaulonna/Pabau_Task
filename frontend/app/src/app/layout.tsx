@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className="row py-3 border-bottom bg-white">
           <div className="col-12 ">
             <Link href={"/"} className="text-decoration-none text-dark">
-              Home Page
+              {"<"} Home Page
             </Link>
           </div>
         </div>
