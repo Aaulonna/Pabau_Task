@@ -28,9 +28,9 @@ const CreateBooking = () => {
 
   return (
     <>
-      <Link href="/" className="btn btn-primary ">
+      {/* <Link href="/" className="btn btn-primary ">
         Back
-      </Link>
+      </Link> */}
       <BookingForm handleSubmit={handleSubmit} />
       <Alert />
     </>
